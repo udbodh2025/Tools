@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All-in-one online toolkit for images and PDFs. Compress, convert, resize, and optimize images and PDFs effortlessly.">
+    <meta name="keywords" content="image compressor, PDF tools, image tools, online tools, compress images, optimize PDFs">
+    <title>Image & PDF Tools | All-in-One Online Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #8b5cf6;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 0 0 2rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tool-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card p {
+            color: #64748b;
+        }
+
+        .cta-section {
+            background: white;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-tools"></i>
+                    ToolKit
+                </div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Tools</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Your All-in-One Image & PDF Toolkit</h1>
+            <p>Compress, convert, resize, and optimize images and PDFs effortlessly. Fast, secure, and free to use!</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="tools-grid">
+            <div class="tool-card">
+                <i class="fas fa-file-image"></i>
+                <h3>Image Compressor</h3>
+                <p>Reduce image size without losing quality. Supports JPG, PNG, and WEBP.</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-file-pdf"></i>
+                <h3>PDF Compressor</h3>
+                <p>Compress PDF files to reduce their size while maintaining quality.</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>Image Converter</h3>
+                <p>Convert images between JPG, PNG, WEBP, and more formats.</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-crop"></i>
+                <h3>Image Resizer</h3>
+                <p>Resize images to any dimension while maintaining aspect ratio.</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-file-export"></i>
+                <h3>PDF to Image</h3>
+                <p>Convert PDF pages to high-quality images in seconds.</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-images"></i>
+                <h3>Image to PDF</h3>
+                <p>Combine multiple images into a single PDF file.</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Optimize Your Files?</h2>
+            <p>Join thousands of users who trust our tools for their image and PDF needs. Fast, secure, and free to use!</p>
+            <a href="#" class="cta-button">Get Started Now</a>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ToolKit. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+</body>
+</html>
