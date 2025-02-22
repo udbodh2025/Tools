@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer Pro | Online Image Size Optimization Tool</title>
+    <meta name="description" content="Free online image resizer tool. Resize and optimize images to any dimension with SEO-friendly compression. Supports JPG, PNG, and WebP formats.">
+    <meta name="keywords" content="image resizer, resize images, image optimizer, online photo resizer, image compression">
+    <meta property="og:title" content="Image Resizer Pro">
+    <meta property="og:description" content="Free online image resizing and optimization tool">
+
+    <!-- Google AdSense Script -->
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8670806101233381"
+     crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f6fa;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Resizer Interface Styles */
+        .resizer-box {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .ad-section {
+            margin: 1.5rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .resizer-box {
+                padding: 1rem;
+            }
+        }
+
+        /* Input Styles */
+        .dimension-inputs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        input[type="number"] {
+            padding: 0.8rem;
+            width: 120px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .quality-control {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        #resizeBtn {
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        #resizeBtn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Ad Modal -->
+    <div id="adModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdModal()">&times;</span>
+            <!-- Ad Unit for Modal -->
+            
+           <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <header class="header">
+        <h1>Image Resizer Pro</h1>
+        <p>Resize and optimize images to any dimension instantly</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="ad-section">
+                <!-- Top Ad Unit -->
+                
+                 <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="0987654321"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="resizer-box">
+                <input type="file" id="imageInput" accept="image/*" style="margin: 1rem 0;">
+                
+                <div class="dimension-inputs">
+                    <input type="number" id="width" placeholder="Width (px)">
+                    <input type="number" id="height" placeholder="Height (px)">
+                </div>
+
+                <div class="quality-control">
+                    <label>Quality:</label>
+                    <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
+                    <span id="qualityValue">80%</span>
+                </div>
+
+                <div style="text-align: center;">
+                    <label>
+                        <input type="checkbox" id="maintainAspect" checked> Maintain Aspect Ratio
+                    </label>
+                </div>
+
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button id="resizeBtn" onclick="resizeImage()">Resize Image</button>
+                </div>
+
+                <div id="previewContainer" style="display: none;">
+                    <h3>Preview:</h3>
+                    <canvas id="previewCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="ad-section">
+                <!-- Bottom Ad Unit -->
+             
+                 <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="1122334455"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+
+        <aside>
+            <div class="ad-section">
+                <!-- Sidebar Ad Unit -->
+               <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="5566778899"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+               
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Initialize Ad Modal
+        window.onload = function() {
+            document.getElementById('adModal').style.display = 'flex';
+            initializeAdsense();
+        }
+
+        function closeAdModal() {
+            document.getElementById('adModal').style.display = 'none';
+        }
+
+        function initializeAdsense() {
+            // Initialize all ad units
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }
+
+        // Image Resizing Logic
+        let originalAspectRatio = 0;
+
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    originalAspectRatio = img.width / img.height;
+                    document.getElementById('width').value = img.width;
+                    document.getElementById('height').value = img.height;
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        document.getElementById('maintainAspect').addEventListener('change', function() {
+            if(this.checked && originalAspectRatio) {
+                const width = document.getElementById('width').value;
+                document.getElementById('height').value = Math.round(width / originalAspectRatio);
+            }
+        });
+
+        document.getElementById('quality').addEventListener('input', function() {
+            document.getElementById('qualityValue').textContent = 
+                `${Math.round(this.value * 100)}%`;
+        });
+
+        function resizeImage() {
+            const fileInput = document.getElementById('imageInput');
+            const width = parseInt(document.getElementById('width').value);
+            const height = parseInt(document.getElementById('height').value);
+            const quality = parseFloat(document.getElementById('quality').value);
+
+            if(!fileInput.files[0]) {
+                alert('Please select an image first!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.getElementById('previewCanvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Show preview
+                    document.getElementById('previewContainer').style.display = 'block';
+
+                    // Convert to Blob and download
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.download = `resized-image-${width}x${height}.jpg`;
+                        a.href = url;
+                        a.click();
+                    }, 'image/jpeg', quality);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    </script>
+</body>
+</html>
