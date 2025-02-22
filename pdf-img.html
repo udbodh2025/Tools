@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Image Converter | Convert PDF to JPG, PNG, WEBP Online</title>
+    <meta name="description" content="Convert PDF files to high-quality JPG, PNG, and WebP images instantly. Free online PDF to image converter with adjustable quality settings and SEO-friendly optimization.">
+    <meta name="keywords" content="PDF to JPG, PDF to PNG, PDF to WebP, convert PDF, image converter">
+    <meta property="og:title" content="Online PDF to Image Converter">
+    <meta property="og:description" content="Convert PDF pages to various image formats with optimized quality">
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8670806101233381"
+     crossorigin="anonymous"></script>
+
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f6fa;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Converter Section */
+        .converter-section {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Ad Sections */
+        .ad-unit {
+            margin: 1.5rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        /* Modal Styles */
+        .ad-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Converter Controls */
+        .converter-controls {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            border: 2px dashed #ddd;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .format-selector {
+            padding: 0.8rem;
+            margin: 1rem 0;
+            width: 200px;
+        }
+
+        .quality-control {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .convert-btn {
+            background: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .convert-btn:hover {
+            background: #1976D2;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .converter-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ad Modal -->
+    <div id="adModal" class="ad-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdModal()">&times;</span>
+             <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-8670806101233381"
+               data-ad-slot="3147800292"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <header class="header">
+        <h1>PDF to Image Converter</h1>
+        <p>Convert PDF documents to JPG, PNG, or WebP format</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8670806101233381"
+                 data-ad-slot="3147800292"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="converter-section">
+                <div class="converter-controls">
+                    <input type="file" id="pdfInput" accept="application/pdf">
+                    
+                    <select class="format-selector" id="formatSelect">
+                        <option value="jpg">JPG</option>
+                        <option value="png">PNG</option>
+                        <option value="webp">WebP</option>
+                    </select>
+
+                    <div class="quality-control">
+                        <label>Quality:</label>
+                        <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
+                        <span id="qualityValue">80%</span>
+                    </div>
+
+                    <button class="convert-btn" onclick="convertPDF()">Convert Now</button>
+                </div>
+
+                <div id="previewContainer" style="display: none;">
+                    <h3>Converted Images:</h3>
+                    <div id="imageGallery"></div>
+                </div>
+            </div>
+
+            <div class="ad-unit">
+                 <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-8670806101233381"
+                   data-ad-slot="3147800292"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            </div>
+        </main>
+
+        <aside>
+            <div class="ad-unit">
+                 <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-8670806101233381"
+                   data-ad-slot="3147800292"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Initialize Ad Modal
+        window.onload = function() {
+            document.getElementById('adModal').style.display = 'flex';
+            initializeAdsense();
+        }
+
+        function closeAdModal() {
+            document.getElementById('adModal').style.display = 'none';
+        }
+
+        function initializeAdsense() {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }
+
+        // Quality Control
+        document.getElementById('quality').addEventListener('input', function() {
+            document.getElementById('qualityValue').textContent = 
+                `${Math.round(this.value * 100)}%`;
+        });
+
+        // PDF Conversion Logic
+        async function convertPDF() {
+            const fileInput = document.getElementById('pdfInput');
+            const format = document.getElementById('formatSelect').value;
+            const quality = parseFloat(document.getElementById('quality').value);
+
+            if (!fileInput.files[0]) {
+                alert('Please select a PDF file first!');
+                return;
+            }
+
+            const pdfFile = fileInput.files[0];
+            const pdfData = await pdfFile.arrayBuffer();
+            
+            const loadingTask = pdfjsLib.getDocument({data: pdfData});
+            const pdf = await loadingTask.promise;
+            
+            document.getElementById('previewContainer').style.display = 'block';
+            document.getElementById('imageGallery').innerHTML = '';
+
+            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                const page = await pdf.getPage(pageNumber);
+                const viewport = page.getViewport({scale: 2});
+                
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise;
+
+                // Convert to selected format
+                const mimeType = format === 'jpg' ? 'image/jpeg' : `image/${format}`;
+                canvas.toBlob(function(blob) {
+                    const imgUrl = URL.createObjectURL(blob);
+                    
+                    // Create preview and download link
+                    const container = document.createElement('div');
+                    container.style.margin = '20px 0';
+                    
+                    const imgPreview = document.createElement('img');
+                    imgPreview.src = imgUrl;
+                    imgPreview.style.maxWidth = '100%';
+                    imgPreview.style.border = '1px solid #ddd';
+                    
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = imgUrl;
+                    downloadLink.download = `page-${pageNumber}.${format}`;
+                    downloadLink.textContent = `Download Page ${pageNumber}`;
+                    downloadLink.style.display = 'block';
+                    downloadLink.style.marginTop = '10px';
+                    
+                    container.appendChild(imgPreview);
+                    container.appendChild(downloadLink);
+                    document.getElementById('imageGallery').appendChild(container);
+                }, mimeType, quality);
+            }
+        }
+    </script>
+</body>
+</html>
