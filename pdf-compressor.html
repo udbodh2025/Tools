@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor | Reduce PDF File Size Online</title>
+    <meta name="description" content="Compress PDF files to reduce their size while maintaining quality. Free online PDF compressor tool with SEO-friendly optimization.">
+    <meta name="keywords" content="PDF compressor, reduce PDF size, compress PDF, PDF optimization">
+    <meta property="og:title" content="Online PDF Compressor">
+    <meta property="og:description" content="Compress PDF documents while preserving quality">
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Google AdSense Script -->
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8670806101233381"
+     crossorigin="anonymous"></script>
+
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f6fa;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Compressor Section */
+        .compressor-section {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Ad Sections */
+        .ad-unit {
+            margin: 1.5rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        /* Modal Styles */
+        .ad-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Drag & Drop Zone */
+        .drop-zone {
+            border: 2px dashed #ccc;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+
+        .drop-zone.active {
+            border-color: #2196F3;
+            background: #e3f2fd;
+        }
+
+        /* Controls */
+        .controls {
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .compress-btn {
+            background: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .compress-btn:hover {
+            background: #1976D2;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .compressor-section {
+                padding: 1rem;
+            }
+        }
+      .file-info {
+        margin: 1rem 0;
+        padding: 0.8rem;
+        background: #e3f2fd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .file-name {
+        font-weight: bold;
+        color: #1976D2;
+    }
+
+    .remove-file {
+        color: #ff4444;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+    <!-- Ad Modal -->
+    <div id="adModal" class="ad-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdModal()">&times;</span>
+            <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="3147800292"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <header class="header">
+        <h1>PDF Compressor</h1>
+        <p>Reduce PDF file size while maintaining quality</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="ad-unit">
+               <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="3147800292"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="compressor-section">
+                <div class="drop-zone" id="dropZone">
+                    Drag & Drop PDF Here or Click to Upload
+                    <input type="file" id="fileInput" accept="application/pdf" hidden>
+                </div>
+                <div id="fileInfo" class="file-info" style="display: none;">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="remove-file" onclick="clearFile()">×</span>
+                </div>
+                <div class="controls">
+                    <label>
+                        Compression Level:
+                        <select id="compressionLevel">
+                            <option value="0.6">Medium</option>
+                            <option value="0.4">High</option>
+                            <option value="0.8">Low</option>
+                        </select>
+                    </label>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <button class="compress-btn" onclick="compressPDF()">Compress PDF</button>
+            </div>
+
+            <div class="ad-unit">
+              <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="3147800292"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+            </div>
+        </main>
+
+        <aside>
+            <div class="ad-unit">
+               <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8670806101233381"
+             data-ad-slot="3147800292"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Initialize Ad Modal
+        window.onload = function() {
+            document.getElementById('adModal').style.display = 'flex';
+            initializeAdsense();
+        }
+
+        function closeAdModal() {
+            document.getElementById('adModal').style.display = 'none';
+        }
+
+        function initializeAdsense() {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }
+
+        // PDF Handling
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        let currentPDF = null;
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('active');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('active');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('active');
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        fileInput.addEventListener('change', () => handleFile(fileInput.files[0]));
+
+     function updateFileInfo(filename) {
+        document.getElementById('fileInfo').style.display = 'flex';
+        document.getElementById('fileName').textContent = filename;
+    }
+
+    function clearFile() {
+        currentPDF = null;
+        fileInput.value = '';
+        document.getElementById('fileInfo').style.display = 'none';
+        document.getElementById('progressBar').style.width = '0%';
+    }
+
+    async function handleFile(file) {
+        if (!file) return;
+        
+        updateFileInfo(file.name);
+        const pdfData = await file.arrayBuffer();
+        currentPDF = pdfData;
+    }
+
+
+        // Compression Logic
+        async function compressPDF() {
+            if (!currentPDF) {
+                alert('Please select a PDF file first!');
+                return;
+            }
+
+            const compressionLevel = parseFloat(document.getElementById('compressionLevel').value);
+            const progressBar = document.getElementById('progressBar');
+            
+            try {
+                const loadingTask = pdfjsLib.getDocument(currentPDF);
+                const pdf = await loadingTask.promise;
+                const totalPages = pdf.numPages;
+                const doc = new jspdf.jsPDF();
+
+                progressBar.style.width = '0%';
+                
+                for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+                    const page = await pdf.getPage(pageNumber);
+                    const viewport = page.getViewport({scale: 1.0});
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    
+                    await page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    }).promise;
+
+                    // Compress image
+                    const imageData = canvas.toDataURL('image/jpeg', compressionLevel);
+                    
+                    // Add to PDF
+                    const imgProps = doc.getImageProperties(imageData);
+                    const pdfWidth = doc.internal.pageSize.getWidth();
+                    const pdfHeight = doc.internal.pageSize.getHeight();
+                    const ratio = Math.min(pdfWidth / imgProps.width, pdfHeight / imgProps.height);
+                    
+                    doc.addImage(imageData, 'JPEG', 0, 0, imgProps.width * ratio, imgProps.height * ratio);
+                    if (pageNumber < totalPages) doc.addPage();
+                    
+                    // Update progress
+                    progressBar.style.width = `${(pageNumber / totalPages) * 100}%`;
+                }
+
+                doc.save(`compressed-${Date.now()}.pdf`);
+                progressBar.style.width = '100%';
+            } catch (error) {
+                alert('Error compressing PDF: ' + error.message);
+                progressBar.style.width = '0%';
+            }
+        }
+    </script>
+</body>
+</html>
