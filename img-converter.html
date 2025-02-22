@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter Pro | Online Image Optimization Tool</title>
+    <meta name="description" content="Free online image converter tool supporting multiple formats. Optimize and convert images to WebP, JPEG, PNG with SEO-friendly compression.">
+    <meta name="keywords" content="image converter, optimize images, webp converter, image compression, online tool">
+    <meta property="og:title" content="Image Converter Pro">
+    <meta property="og:description" content="Free online image optimization and conversion tool supporting multiple formats">
+    
+    <!-- Google AdSense Script (Replace with your own) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: #f0f2f5;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Conversion Section */
+        .converter-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Ad Sections */
+        .ad-section {
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        /* Conversion Interface */
+        .converter-interface {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin: 1rem 0;
+        }
+
+        .format-selector {
+            padding: 0.5rem;
+            margin: 1rem 0;
+            width: 200px;
+        }
+
+        .convert-btn {
+            background: #007bff;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .convert-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Ad Configuration Modal -->
+    <div id="configModal" class="modal">
+        <div class="modal-content">
+            <h2>AdSense Configuration</h2>
+            <input type="text" id="adsenseId" placeholder="Enter AdSense Unit ID">
+            <button onclick="saveAdConfig()">Save Configuration</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <header class="header">
+        <h1>Image Converter Pro</h1>
+        <p>Convert and optimize images to various formats instantly</p>
+    </header>
+
+    <div class="container">
+        <main class="converter-section">
+            <div class="ad-section">
+                <!-- Ad Unit 1 -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="YYYYYYYYYY"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="converter-interface">
+                <input type="file" id="imageInput" accept="image/*">
+                <select class="format-selector" id="formatSelect">
+                    <option value="webp">WEBP</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="png">PNG</option>
+                </select>
+                <button class="convert-btn" onclick="convertImage()">Convert Now</button>
+            </div>
+
+            <div class="conversion-status" id="status"></div>
+            <div class="gallery" id="gallery"></div>
+
+            <div class="ad-section">
+                <!-- Ad Unit 2 -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="ZZZZZZZZZZ"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="ad-section">
+                <!-- Vertical Ad Unit -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="WWWWWWWWWW"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Modal Handling
+        window.onload = function() {
+            document.getElementById('configModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('configModal').style.display = 'none';
+        }
+
+        function saveAdConfig() {
+            const adUnitId = document.getElementById('adsenseId').value;
+            // Store in localStorage and update ad units
+            localStorage.setItem('adConfig', adUnitId);
+            closeModal();
+        }
+
+        // Image Conversion Logic
+        async function convertImage() {
+            const input = document.getElementById('imageInput');
+            const format = document.getElementById('formatSelect').value;
+            const status = document.getElementById('status');
+            
+            if (!input.files[0]) {
+                status.innerHTML = "Please select an image first!";
+                return;
+            }
+
+            status.innerHTML = "Processing image...";
+            
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const img = new Image();
+                img.src = e.target.result;
+                
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.download = `converted-image.${format}`;
+                        link.href = url;
+                        link.click();
+                        status.innerHTML = "Conversion complete!";
+                    }, `image/${format}`, 0.8);
+                };
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        // Initialize AdSense
+        window.onload = function() {
+            const storedConfig = localStorage.getItem('adConfig');
+            if (!storedConfig) {
+                document.getElementById('configModal').style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
